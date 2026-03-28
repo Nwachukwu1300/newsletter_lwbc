@@ -209,6 +209,16 @@
   }
   .no-data strong { display: block; font-size: 18px; color: #1a3a5c; margin-bottom: 8px; }
 
+  .cleaning-rota-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 4px; }
+  .cleaning-rota-table th { background-color: #c8973a; color: #ffffff; text-align: left; padding: 9px 12px; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+  .cleaning-rota-table td { padding: 9px 12px; border-bottom: 1px solid #ede9e2; vertical-align: top; }
+  .cleaning-rota-table tr:nth-child(even) td { background-color: #faf7f2; }
+  .cleaning-rota-table tr:last-child td { border-bottom: none; }
+  .cleaning-rota-table td:first-child { font-weight: 700; color: #1a3a5c; white-space: nowrap; }
+  .cleaning-rota-table .current-week { background-color: #e8f4e8 !important; }
+  .cleaning-rota-table .current-week td { background-color: #e8f4e8 !important; }
+  .current-badge { display: inline-block; background: #2e7d32; color: white; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
   @media (max-width: 480px) {
     .email-wrapper { margin: 0; border-radius: 0; }
     .section { padding: 22px 18px; }
@@ -222,6 +232,56 @@
 <div class="email-wrapper" id="newsletter"></div>
 
 <script>
+
+/* ==========================================================
+   CLEANING TEAMS — Update team members here
+   ========================================================== */
+
+const cleaningTeams = {
+  1: ["Joyce", "Jaxs", "Una", "Ade"],
+  2: ["Linda", "Evelyn", "Alberta"],
+  3: ["Joseph", "George", "Sally"]
+};
+
+/* Cleaning rota for the entire year (2026)
+   Format: { month: { day: teamNumber } }
+   Month: 1 = January, 12 = December */
+
+const cleaningRota = {
+  1:  { 2: 3, 9: 1, 16: 2, 23: 3, 30: 1 },           // January
+  2:  { 6: 2, 13: 3, 20: 1, 27: 2 },                 // February
+  3:  { 6: 3, 13: 1, 20: 2, 27: 3 },                 // March
+  4:  { 3: 1, 10: 2, 17: 3, 24: 1 },                 // April
+  5:  { 1: 2, 8: 3, 15: 1, 22: 2, 29: 3 },           // May
+  6:  { 5: 1, 12: 2, 19: 3, 26: 1 },                 // June
+  7:  { 3: 2, 10: 3, 17: 1, 24: 2, 31: 3 },          // July
+  8:  { 7: 1, 14: 2, 21: 3, 28: 1 },                 // August
+  9:  { 4: 2, 11: 3, 18: 1, 25: 2 },                 // September
+  10: { 2: 3, 9: 1, 16: 2, 23: 3, 30: 1 },           // October
+  11: { 6: 2, 13: 3, 20: 1, 27: 2 },                 // November
+  12: { 4: 3, 11: 1, 18: 2, 25: 3 }                  // December
+};
+
+/* Helper to get cleaning rota for a given month */
+function getCleaningRotaForMonth(month) {
+  const monthRota = cleaningRota[month];
+  if (!monthRota) return [];
+
+  const monthNames = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const result = [];
+
+  const days = Object.keys(monthRota).map(Number).sort((a, b) => a - b);
+  for (const day of days) {
+    const teamNum = monthRota[day];
+    const teamMembers = cleaningTeams[teamNum];
+    result.push({
+      date: `${day} ${monthNames[month]}`,
+      team: `Team ${teamNum}`,
+      members: teamMembers.join(", ")
+    });
+  }
+  return result;
+}
 
 /* ==========================================================
    YOUR YEARLY DATA — UPDATE THIS ONCE A YEAR
@@ -364,8 +424,158 @@ const yearlyData = {
     ],
   },
 
-  /* --- Copy the block above and paste for months 4–12 --- */
-  /* --- Just change the number and fill in the details   --- */
+  4: { // APRIL
+    month: "April 2026",
+    quote: "Your April quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  5: { // MAY
+    month: "May 2026",
+    quote: "Your May quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  6: { // JUNE
+    month: "June 2026",
+    quote: "Your June quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  7: { // JULY
+    month: "July 2026",
+    quote: "Your July quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  8: { // AUGUST
+    month: "August 2026",
+    quote: "Your August quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  9: { // SEPTEMBER
+    month: "September 2026",
+    quote: "Your September quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  10: { // OCTOBER
+    month: "October 2026",
+    quote: "Your October quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  11: { // NOVEMBER
+    month: "November 2026",
+    quote: "Your November quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
+
+  12: { // DECEMBER
+    month: "December 2026",
+    quote: "Your December quote or verse goes here.",
+    quoteRef: "— Source / Reference",
+    seriesLabel: "Current Series",
+    seriesTitle: "Series Title",
+    seriesSubtitle: "Series subtitle or description",
+    seriesDetails: [{ label: "Detail", value: "Value" }],
+    events: [],
+    rota: { columns: ["Date", "Welcome", "Hospitality", "Prayer"], rows: [] },
+    prayerPoints: ["Prayer point one", "Prayer point two"],
+    prayerQuote: "A closing quote for the prayer section.",
+    prayerQuoteRef: "— Source / Reference",
+    sundaySchoolRota: { rows: [] },
+    announcements: [],
+  },
 
 };
 
@@ -402,6 +612,58 @@ const churchInfo = {
 /* ==========================================================
    RENDERING — no need to touch anything below this line
    ========================================================== */
+
+/* Render the cleaning rota section */
+function renderCleaningRota(month) {
+  const rota = getCleaningRotaForMonth(month);
+  if (!rota.length) return '';
+
+  const today = new Date();
+  const currentDay = today.getDate();
+  const currentMonth = today.getMonth() + 1;
+
+  // Find which week is current (closest upcoming or current date)
+  let currentWeekDate = null;
+  if (month === currentMonth) {
+    const rotaDays = Object.keys(cleaningRota[month]).map(Number).sort((a, b) => a - b);
+    for (const day of rotaDays) {
+      if (day >= currentDay) {
+        currentWeekDate = day;
+        break;
+      }
+    }
+    // If we're past all dates this month, highlight the last one
+    if (!currentWeekDate && rotaDays.length > 0) {
+      currentWeekDate = rotaDays[rotaDays.length - 1];
+    }
+  }
+
+  return `
+    <div class="section">
+      <div class="section-title">Cleaning Rota</div>
+      <table class="cleaning-rota-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Team</th>
+            <th>Members</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rota.map(r => {
+            const dayNum = parseInt(r.date.split(' ')[0]);
+            const isCurrentWeek = (month === currentMonth && dayNum === currentWeekDate);
+            return `
+              <tr class="${isCurrentWeek ? 'current-week' : ''}">
+                <td>${r.date}${isCurrentWeek ? '<span class="current-badge">This Week</span>' : ''}</td>
+                <td>${r.team}</td>
+                <td>${r.members}</td>
+              </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
 
 function render() {
   const currentMonth = new Date().getMonth() + 1; // 1–12
@@ -514,6 +776,8 @@ function render() {
           ${a.body}
         </div>`).join('')}
     </div>` : ''}
+
+    ${renderCleaningRota(currentMonth)}
 
     <div class="footer">
       <div class="footer-org">${churchInfo.name}</div>
